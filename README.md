@@ -1,2 +1,2 @@
-# Ping Pong
- Jogo de Ping Pong com JavaScript
+# Pong
+Pong Game com JavaScript!

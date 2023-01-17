@@ -1,6 +1,6 @@
 //Selecionando o elemento <canvas> pelo DOM e instanciando seu contexto gráfico.
-canvas = document.querySelector('canvas')
-canvasCtx = canvas.getContext('2d')
+const canvas = document.querySelector('canvas')
+const canvasCtx = canvas.getContext('2d')
 //Definindo as dimensões do contexto.
 function setUp(){
     canvas.width = canvasCtx.width = window.innerWidth

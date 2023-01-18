@@ -36,8 +36,8 @@ const racket = {
 }
 const ball = {
     r : 8,
-    x : 50,
-    y : 80,
+    x : board.w/2,
+    y : board.h/6,
     speed: 3,
     directionX : 1,
     directionY : 1,
@@ -64,8 +64,8 @@ const ball = {
     },
     _restart : function(){
         this.speed = 3
-        this.x = 50
-        this.y = 80
+        this.x = board.w/2
+        this.y = board.h/6
     },
     _revertY : function(){
         this.directionY *= -1

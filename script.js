@@ -22,9 +22,9 @@ const board = {
 }
 const racket = {
     x : 0,
-    w : 75,
+    w : 60,
     h : 15,
-    y : board.h - 100,
+    y : board.h - 150,
     _move : function(){
         this.x = mouse.x - this.w/2
     },
@@ -35,12 +35,12 @@ const racket = {
     }
 }
 const ball = {
-    r : 8,
+    r : 7,
     x : board.w/2,
     y : board.h/6,
     speed: 3,
     directionX : 1,
-    directionY : 1,
+    directionY : -1,
     _checkPosition : function(){
         if(this.y < 0 + this.r){
             this._revertY()

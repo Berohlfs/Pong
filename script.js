@@ -1,43 +1,43 @@
 //Selecionando o elemento <canvas> pelo DOM e instanciando seu contexto gráfico.
-const canvas = document.querySelector('canvas')
-const canvasCtx = canvas.getContext('2d')
+const CANVAS = document.querySelector('canvas')
+const CANVAS_CTX = CANVAS.getContext('2d')
 //Definindo as dimensões do contexto.
 function setUp(){
-    canvas.width = canvasCtx.width = window.innerWidth
-    canvas.height = canvasCtx.height = window.innerHeight
+    CANVAS.width = CANVAS_CTX.width = window.innerWidth
+    CANVAS.height = CANVAS_CTX.height = window.innerHeight
 }
 //Declarando os objetos
-const mouse = {x : window.innerWidth/2}
-const board = {
+const MOUSE = {x : window.innerWidth/2}
+const BOARD = {
     w : window.innerWidth,
     h : window.innerHeight,
     _gameOver : function(){
-        canvasCtx.fillStyle = 'red'
-        canvasCtx.fillRect(0, 0, this.w, this.h)
+        CANVAS_CTX.fillStyle = 'red'
+        CANVAS_CTX.fillRect(0, 0, this.w, this.h)
     },
     _draw : function(){
-        canvasCtx.fillStyle = 'black'
-        canvasCtx.fillRect(0, 0, this.w, this.h)
+        CANVAS_CTX.fillStyle = 'black'
+        CANVAS_CTX.fillRect(0, 0, this.w, this.h)
     }
 }
-const racket = {
+const RACKET = {
     x : 0,
     w : 60,
     h : 15,
-    y : board.h - 150,
+    y : BOARD.h - 150,
     _move : function(){
-        this.x = mouse.x - this.w/2
+        this.x = MOUSE.x - this.w/2
     },
     _draw : function(){
-        canvasCtx.fillStyle = 'white'
-        canvasCtx.fillRect(this.x, this.y, this.w, this.h)
+        CANVAS_CTX.fillStyle = 'white'
+        CANVAS_CTX.fillRect(this.x, this.y, this.w, this.h)
         this._move()
     }
 }
-const ball = {
+const BALL = {
     r : 7,
-    x : board.w/2,
-    y : board.h/6,
+    x : BOARD.w/2,
+    y : BOARD.h/6,
     speed: 3,
     directionX : 1,
     directionY : -1,
@@ -45,17 +45,17 @@ const ball = {
         if(this.y < 0 + this.r){
             this._revertY()
         }
-        else if(this.y > board.h - this.r){
+        else if(this.y > BOARD.h - this.r){
            this._restart()
-           placar._restart()
-           board._gameOver()
+           SCORE._restart()
+           BOARD._gameOver()
         }
-        else if ((this.x > board.w - this.r) || (this.x < 0 + this.r)){
+        else if ((this.x > BOARD.w - this.r) || (this.x < 0 + this.r)){
             this._revertX()
         }
-        else if((this.x > racket.x && this.x < racket.x + racket.w)&&(this.y > racket.y - this.r && this.y < racket.y + racket.h - this.r)){
+        else if((this.x > RACKET.x && this.x < RACKET.x + RACKET.w)&&(this.y > RACKET.y - this.r && this.y < RACKET.y + RACKET.h - this.r)){
             this._revertY()
-            placar._addPoint()
+            SCORE._addPoint()
             this._addSpeed()
         }
     },
@@ -64,8 +64,8 @@ const ball = {
     },
     _restart : function(){
         this.speed = 3
-        this.x = board.w/2
-        this.y = board.h/6
+        this.x = BOARD.w/2
+        this.y = BOARD.h/6
     },
     _revertY : function(){
         this.directionY *= -1
@@ -78,14 +78,14 @@ const ball = {
         this.y += this.directionY * this.speed
     },
     _draw : function(){
-        canvasCtx.beginPath()
-        canvasCtx.arc(this.x, this.y, this.r, 0, 2*Math.PI, false)
-        canvasCtx.fill()
+        CANVAS_CTX.beginPath()
+        CANVAS_CTX.arc(this.x, this.y, this.r, 0, 2*Math.PI, false)
+        CANVAS_CTX.fill()
         this._move()
         this._checkPosition()
     }
 }
-const placar = {
+const SCORE = {
     content : 0,
     _addPoint : function(){
         this.content++
@@ -94,19 +94,19 @@ const placar = {
         this.content = 0
     },
     _draw : function(){
-        canvasCtx.fillStyle = 'grey'
-        canvasCtx.font = 'bold 40px Arial'
-        canvasCtx.textAlign = 'center'
-        canvasCtx.textBaseline = 'top'
-        canvasCtx.fillText(`${this.content}`, board.w/2, 40)
+        CANVAS_CTX.fillStyle = 'grey'
+        CANVAS_CTX.font = 'bold 40px Arial'
+        CANVAS_CTX.textAlign = 'center'
+        CANVAS_CTX.textBaseline = 'top'
+        CANVAS_CTX.fillText(`${this.content}`, BOARD.w/2, 40)
     }
 }
 //Função 'draw' --> Chama os métodos de desenho
 function draw(){
-    board._draw()
-    racket._draw()
-    ball._draw()
-    placar._draw()    
+    BOARD._draw()
+    RACKET._draw()
+    BALL._draw()
+    SCORE._draw()    
 }
 //Animações
 window.animateFrame = (function () {
@@ -128,10 +128,9 @@ function main(){
 //Chamada de funções e eventListeners
 setUp()
 main()
-canvas.addEventListener('mousemove', (e)=>{
-    mouse.x = e.pageX
+CANVAS.addEventListener('mousemove', (e)=>{
+    MOUSE.x = e.pageX
 })
-canvas.addEventListener('touchmove', (e)=>{
-    mouse.x = e.targetTouches[0].pageX
-    console.log(e)
+CANVAS.addEventListener('touchmove', (e)=>{
+    MOUSE.x = e.targetTouches[0].pageX
 })

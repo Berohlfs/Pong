@@ -35,32 +35,32 @@ const RACKET = {
     }
 }
 const BALL = {
-    r : 7,
-    x : BOARD.w/2,
+    r : 6,
+    x : BOARD.w/4,
     y : BOARD.h/6,
     speed: 3,
     directionX : 1,
     directionY : -1,
     _checkPosition : function(){
-        if(this.y < 0 + this.r){
+        if(this.y < 0){
             this._revertY()
         }
-        else if(this.y > BOARD.h - this.r){
+        else if(this.y > BOARD.h){
            this._restart()
            SCORE._restart()
            BOARD._gameOver()
         }
-        else if ((this.x > BOARD.w - this.r) || (this.x < 0 + this.r)){
+        else if ((this.x > BOARD.w) || (this.x < 0)){
             this._revertX()
         }
-        else if((this.x > RACKET.x && this.x < RACKET.x + RACKET.w)&&(this.y > RACKET.y - this.r && this.y < RACKET.y + RACKET.h - this.r)){
+        else if((this.x > RACKET.x && this.x < RACKET.x + RACKET.w)&&(this.y > RACKET.y && this.y < RACKET.y + RACKET.h)){
             this._revertY()
             SCORE._addPoint()
             this._addSpeed()
         }
     },
     _addSpeed : function(){
-        if(this.speed < 10){this.speed+=0.5}
+        if(this.speed < 10){this.speed+=0.3}
     },
     _restart : function(){
         this.speed = 3
